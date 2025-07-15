@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Event Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="text-center mb-3">
+                <i class="fas fa-calendar-alt fa-3x text-primary mb-2"></i>
+                <h1 class="login-title">Event Management System</h1>
+                <h2 class="text-center mb-3 text-muted">FPT University Da Nang</h2>
+                <p class="text-muted">Sign in to your account</p>
+            </div>
+            
+            <div id="alertContainer"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" id="loginBtn" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </div>
+            </form>
+            
+            <div class="text-center mt-3">
+                <p class="text-muted">Don't have an account? 
+                    <a href="/register" class="text-primary">Register here</a>
+                </p>
+            </div>
+            
+            <div class="demo-accounts mt-4">
+                <h4 class="text-center mb-2">
+                    <i class="fas fa-info-circle"></i> Demo Accounts
+                </h4>
+                <div class="demo-grid">
+                    <div class="demo-account">
+                        <i class="fas fa-user-shield text-primary"></i>
+                        <strong>Admin:</strong> admin / admin123
+                    </div>
+                    <div class="demo-account">
+                        <i class="fas fa-user-graduate text-success"></i>
+                        <strong>Student:</strong> student / student123
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/app.js"></script>
+</body>
+</html> 

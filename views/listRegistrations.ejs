@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Registrations - Event Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="/dashboard" class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                Event Management System
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li data-role="admin"><a href="/create-event"><i class="fas fa-plus-circle"></i> Create Event</a></li>
+                    <li data-role="student"><a href="/register-event"><i class="fas fa-calendar-plus"></i> Register for Events</a></li>
+                    <li data-role="student"><a href="/cancel-registration"><i class="fas fa-list-alt"></i> My Registrations</a></li>
+                    <li data-role="admin"><a href="/list-registrations"><i class="fas fa-users"></i> View All Registrations</a></li>
+                    <li data-role="admin"><a href="/search-registrations"><i class="fas fa-search"></i> Search Registrations</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h1><i class="fas fa-users text-primary"></i> All Event Registrations</h1>
+            <p class="text-muted">View all student registrations for events.</p>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <!-- Registrations Table -->
+        <div class="card">
+            <h2><i class="fas fa-table text-primary"></i> Registration List</h2>
+            <div id="registrationsContainer">
+                <p class="text-center">Loading registrations...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html> 

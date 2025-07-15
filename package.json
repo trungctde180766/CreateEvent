@@ -1,0 +1,27 @@
+{
+  "name": "thanhtrung_event",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "seed": "node seedData.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["event", "management", "nodejs", "express", "mongodb"],
+  "author": "Thanh Trung",
+  "license": "ISC",
+  "description": "Event Management System for FPT University Da Nang",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-session": "^1.17.3",
+    "ejs": "^3.1.9",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

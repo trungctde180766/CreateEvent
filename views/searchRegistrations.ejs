@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Registrations - Event Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="/dashboard" class="logo">
+                <i class="fas fa-calendar-alt"></i>
+                Event Management System
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li data-role="admin"><a href="/create-event"><i class="fas fa-plus-circle"></i> Create Event</a></li>
+                    <li data-role="student"><a href="/register-event"><i class="fas fa-calendar-plus"></i> Register for Events</a></li>
+                    <li data-role="student"><a href="/cancel-registration"><i class="fas fa-list-alt"></i> My Registrations</a></li>
+                    <li data-role="admin"><a href="/list-registrations"><i class="fas fa-users"></i> View All Registrations</a></li>
+                    <li data-role="admin"><a href="/search-registrations"><i class="fas fa-search"></i> Search Registrations</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h1><i class="fas fa-search text-primary"></i> Search Registrations</h1>
+            <p class="text-muted">Search for registrations within a specific date range.</p>
+        </div>
+
+        <div id="alertContainer"></div>
+
+        <!-- Search Form -->
+        <div class="card">
+            <h2><i class="fas fa-calendar-week text-primary"></i> Search by Date Range</h2>
+            <form id="searchForm">
+                <div class="form-group">
+                    <label for="startDate">
+                        <i class="fas fa-calendar-day"></i> Start Date
+                    </label>
+                    <input type="date" id="startDate" name="startDate" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="endDate">
+                        <i class="fas fa-calendar-day"></i> End Date
+                    </label>
+                    <input type="date" id="endDate" name="endDate" class="form-control" required>
+                </div>
+                
+                <button type="submit" id="searchBtn" class="btn btn-primary">
+                    <i class="fas fa-search"></i> Search Registrations
+                </button>
+            </form>
+        </div>
+
+        <!-- Search Results -->
+        <div class="card">
+            <h2><i class="fas fa-list text-primary"></i> Search Results</h2>
+            <div id="registrationsContainer">
+                <p class="text-center"><i class="fas fa-info-circle text-muted"></i> Enter a date range and click search to view results.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const token = localStorage.getItem('token');
+            const resultsContainer = document.getElementById('registrationsContainer');
+            if (!startDate || !endDate) {
+                resultsContainer.innerHTML = '<p class="text-center text-danger">Please enter both start and end date.</p>';
+                return;
+            }
+            if (endDate < startDate) {
+                resultsContainer.innerHTML = '<p class="text-center text-danger">End date must be after start date.</p>';
+                return;
+            }
+            resultsContainer.innerHTML = '<p class="text-center">Searching...</p>';
+            try {
+                const response = await fetch(`/api/registrations/getRegistrationsByDate?start=${startDate}&end=${endDate}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (response.ok) {
+                    const registrations = await response.json();
+                    if (!registrations.length) {
+                        resultsContainer.innerHTML = '<p class="text-center text-muted">No registrations found in this date range.</p>';
+                        return;
+                    }
+                    resultsContainer.innerHTML = `
+                        <div class='table-container'>
+                            <table class='table'>
+                                <thead>
+                                    <tr>
+                                        <th><i class='fas fa-id-card'></i> Registration ID</th>
+                                        <th><i class='fas fa-user'></i> Student</th>
+                                        <th><i class='fas fa-calendar'></i> Event</th>
+                                        <th><i class='fas fa-clock'></i> Registration Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${registrations.map(reg => `
+                                        <tr>
+                                            <td><code>${reg._id}</code></td>
+                                            <td><i class='fas fa-user-graduate'></i> ${reg.studentId?.username || 'Unknown'}</td>
+                                            <td><i class='fas fa-calendar-day'></i> ${reg.eventId?.name || 'Unknown'}</td>
+                                            <td><i class='fas fa-clock'></i> ${new Date(reg.registrationDate).toLocaleString()}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                } else {
+                    resultsContainer.innerHTML = '<p class="text-center text-danger">Server error. Please try again later.</p>';
+                }
+            } catch (error) {
+                resultsContainer.innerHTML = '<p class="text-center text-danger">A network or server error occurred.</p>';
+            }
+        });
+    </script>
+</body>
+</html> 
